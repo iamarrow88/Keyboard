@@ -171,7 +171,7 @@ const en = [
   },
   {
     code: 'Delete',
-    id: 'delete',
+    id: 'del',
     normal: 'Del',
     caps: null,
   }],
@@ -342,13 +342,13 @@ const en = [
   },
   {
     code: 'MetaLeft',
-    id: 'Meta',
+    id: 'meta',
     normal: 'Win',
     caps: null,
   },
   {
     code: 'AltLeft',
-    id: 'Alt',
+    id: 'alt',
     normal: 'Alt',
     caps: null,
   },
@@ -384,7 +384,7 @@ const en = [
   },
   {
     code: 'AltRight',
-    id: 'Alt',
+    id: 'alt',
     normal: 'Alt',
     caps: null,
   }]
