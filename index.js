@@ -3,6 +3,7 @@ import {
   createKey
 } from './JS/modules/create.js';
 import en from './JS/langs/en.js';
+import ru from './JS/langs/ru.js';
 import {
   symbols,
   specials,
@@ -24,10 +25,14 @@ import {
   arrowL,
   arrowR,
   arrowU,
-  arrowD
+  arrowD,
+  enterKey
 }
-from './JS/modules/arrows.js';
+from './JS/modules/linesNav.js';
 
+let lang;
+/* localStorage.setItem('lang', 'en'); */
+/* localStorage.getItem('lang'); */
 createBlock(en);
 
 const body = document.querySelector('body');
@@ -38,8 +43,9 @@ export function getFocus() {
 }
 
 export function getCaretPos() {
-  posCaret = textarea.selectionStart;
+  posCaret = document.querySelector('.textarea').selectionStart;
   console.log(posCaret);
+  return posCaret;
 }
 
 body.addEventListener('keydown', function (event) {
@@ -128,3 +134,19 @@ upArrow.addEventListener('click', () => arrowU(posCaret));
 
 const downArrow = document.querySelector('#ArrowDown');
 downArrow.addEventListener('click', () => arrowD(posCaret));
+
+const enter = document.querySelector('#Enter');
+enter.addEventListener('click', (event) => enterKey(event));
+
+
+
+
+/* ---------------------------change language--------- */
+
+const shiftKey = document.querySelector('#ShiftLeft');
+downArrow.addEventListener('click', () => arrowD(posCaret));
+
+
+
+
+
