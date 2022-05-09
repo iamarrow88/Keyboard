@@ -153,10 +153,38 @@ keysBlock.addEventListener('mousedown', (event) => {
       }
     }
   }
+  if (event.target.dataset.mouseId === 'capslock'){
+    if (capsToggle){
+      capsToggle = false;
+      console.log(capsToggle);
+    } else {
+      capsToggle = true;
+      console.log(capsToggle);
+    }
+  }
+  if (event.target.dataset.mouseId === 'alt') {
+    event.preventDefault();
+    stack.push('alt');
+    if (stack.length > 2) {
+      stack.shift();
+    }
+  }
+  if (event.target.dataset.mouseId === 'shift') {
+    event.preventDefault();
+    shiftToggle = true;
+    stack.push('shift');
+    if (stack.length > 2) {
+      stack.shift();
+    }
+  }
 });
 
 keysBlock.addEventListener('mouseup', (event) => {
   event.target.classList.remove('active');
+  if (event.target.dataset.mouseId === 'shift') {
+    event.preventDefault();
+    shiftToggle = false;
+  }
 });
 
 /* ------------------ reset btn --------------------------- */
