@@ -6,6 +6,10 @@ export function createBlock(arrRows){
  let header = document.createElement('h1');
  header.innerHTML = 'Virtual Keyboard';
  container.prepend(header);
+ let message = document.createElement('div');
+ message.classList.add('message');
+ message.innerHTML = 'Keyboard created on Windows. To switch language press Shift + Alt';
+ container.append(message);
  let btn = document.createElement('button');
  btn.innerHTML = 'Delete all text';
  container.append(btn);
