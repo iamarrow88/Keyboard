@@ -29,8 +29,9 @@ import {
   from './JS/modules/linesNav.js';
 
 const lang = [en, ru];
-
 let ch = localStorage.getItem('ch') || 0;
+let shiftToggle = false;
+let capsToggle = false;
 
 createBlock(lang[ch]);
 
@@ -69,6 +70,15 @@ body.addEventListener('keydown', (event) => {
   getFocus();
   posCaret = textarea.selectionStart;
   const idElem = document.querySelector(`#${event.code}`);
+  if (event.code === 'CapsLock'){
+    if (capsToggle){
+      capsToggle = false;
+      console.log(capsToggle);
+    } else {
+      capsToggle = true;
+      console.log(capsToggle);
+    }
+  }
   if (event.code === 'AltLeft' || event.code === 'AltRight') {
     event.preventDefault();
     stack.push('alt');
@@ -78,6 +88,7 @@ body.addEventListener('keydown', (event) => {
   }
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     event.preventDefault();
+    shiftToggle = true;
     stack.push('shift');
     if (stack.length > 2) {
       stack.shift();
@@ -96,11 +107,15 @@ body.addEventListener('keydown', (event) => {
   posCaret = document.querySelector('textarea').selectionStart;
 });
 
-body.addEventListener('keyup', () => {
+body.addEventListener('keyup', (event) => {
   getFocus();
   const active = document.querySelector('.active');
   if (active) {
     active.classList.remove('active');
+  }
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    event.preventDefault();
+    shiftToggle = false;
   }
 });
 
@@ -128,7 +143,12 @@ keysBlock.addEventListener('mousedown', (event) => {
         posCaret = document.querySelector('textarea').selectionStart;
       } else {
         event.preventDefault();
-        textarea.value += event.target.dataset.mouseId;
+        if (shiftToggle || capsToggle){
+          textarea.value += event.target.dataset.mouseId.toUpperCase();
+        } else {
+          textarea.value += event.target.dataset.mouseId;
+        }
+        
         posCaret = document.querySelector('textarea').selectionStart;
       }
     }
@@ -167,3 +187,11 @@ downArrow.addEventListener('click', () => arrowD(posCaret));
 
 const enter = document.querySelector('#Enter');
 enter.addEventListener('click', (event) => enterKey(event));
+
+
+/* ------------------- SHIFT & CAPS ------------------- */
+
+const shiftLeft = document.querySelector('#ShiftLeft');
+const shiftRight = document.querySelector('#ShiftRight');
+
+
