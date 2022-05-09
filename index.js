@@ -104,7 +104,10 @@ body.addEventListener('keydown', function (event) {
   let newCh = ch;
     ch = changeLang();
     if (newCh !== ch) {
+    let text = document.querySelector('.textarea').value;
+    body.innerHTML = '';
     createBlock(lang[ch]);
+    document.querySelector('.textarea').value = text;
     }
   
   idElem.classList.add('active');
