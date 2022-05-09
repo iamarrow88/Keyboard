@@ -30,13 +30,16 @@ import {
 }
 from './JS/modules/linesNav.js';
 
-let lang;
+let lang = localStorage.getItem('lang') || en;
+/*   */
+let ch = localStorage.getItem('ch') || 0;
 /* localStorage.setItem('lang', 'en'); */
 /* localStorage.getItem('lang'); */
-createBlock(en);
+createBlock(lang);
 
 const body = document.querySelector('body');
 let posCaret = 0;
+let stack = [];
 
 export function getFocus() {
   textarea.focus();
@@ -47,15 +50,65 @@ export function getCaretPos() {
   console.log(posCaret);
   return posCaret;
 }
+/* ---------------------------change language--------- */
+const changeKeys = ['shift', 'alt'];
+const shifts = ['ShiftLeft', 'ShiftRight'];
+const alts = ['AltLeft', 'AltRight'];
+const langs = ['en', 'ru'];
+
+function altsCheking(id, alts){
+  for (let i = 0; i < alts.length; i++){
+    if(id === alts[i]){
+      return 'alt';
+    };
+    return null;
+  }
+}
+
+function shiftsCheking(id, shifts){
+  for (let i = 0; i < shifts.length; i++){
+    if(id === shifts[i]){
+      return 'shift';
+    };
+    return null;
+  }
+}
+
+
+
+function changeLang(lang){
+  if (stack[0] === 'shift' && stack[1] === 'alt'){
+    if(ch = 1){
+      ch = 0;
+    } else {
+      ch = 1;
+    }
+    localStorage.setItem('lang', `${langs[ch]}`);
+    localStorage.setItem('ch', `${ch}`);
+  }
+}
+
+/* ---------------------- end of lang changing----------------------------------- */
 
 body.addEventListener('keydown', function (event) {
   getFocus();
   posCaret = textarea.selectionStart;
   let idElem = document.querySelector(`#${event.code}`);
-  let active = document.querySelector('.active');
-  if (active) {
-    active.classList.remove('active');
+/*   let active = document.querySelector('.active'); */
+  let altChecked = altsCheking(event.code, alts);
+  if (altChecked){
+    console.log(altChecked);
+    stack.push(altChecked);
   }
+  let shiftChecked = shiftsCheking(event.code, shifts);
+  if (shiftChecked){
+    console.log(shiftChecked);
+    stack.push(shiftChecked);
+  }
+  
+/*   if (active) {
+    active.classList.remove('active');
+  } */
   idElem.classList.add('active');
   posCaret = input.selectionStart;
   console.log(posCaret);
@@ -64,7 +117,9 @@ body.addEventListener('keydown', function (event) {
 body.addEventListener('keyup', function (event) {
   getFocus();
   let active = document.querySelector('.active');
-  active.classList.remove('active');
+  if (active) {
+    active.classList.remove('active');
+  }
 });
 
 
@@ -86,12 +141,14 @@ keysBlock.addEventListener('mousedown', function (event) {
     event.target.classList.add('active');
     if (!compare(ident, specials)) {
       if (checkSymbols(getIndex(ident, keys))) {
+        event.preventDefault();
         let index = getIndex(ident, keys);
         let text = substitution(index, values);
         textarea.value += text;
         posCaret = input.selectionStart;
         console.log(posCaret);
       } else {
+        event.preventDefault();
         textarea.value += event.target.dataset.mouseId;
         posCaret = input.selectionStart;
         console.log(posCaret);
@@ -141,10 +198,6 @@ enter.addEventListener('click', (event) => enterKey(event));
 
 
 
-/* ---------------------------change language--------- */
-
-const shiftKey = document.querySelector('#ShiftLeft');
-downArrow.addEventListener('click', () => arrowD(posCaret));
 
 
 

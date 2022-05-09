@@ -11,9 +11,10 @@ export const symbols = {
   period: '.',
   slash: '/',
   space: ' ',
+  tab: '  ',
 };
 
-export const specials = ['backspace', 'tab', 'del', 'capslock', 'enter', 'shift', 'control', 'meta', 'alt', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'];
+export const specials = ['backspace', 'del', 'capslock', 'enter', 'shift', 'control', 'meta', 'alt', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'];
 
 export const keys = Object.keys(symbols);
 export const values = Object.values(symbols);
