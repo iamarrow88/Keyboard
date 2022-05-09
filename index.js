@@ -1,24 +1,22 @@
 import {
   createBlock,
-  createKey
 } from './JS/modules/create.js';
 import en from './JS/langs/en.js';
 import ru from './JS/langs/ru.js';
 import {
-  symbols,
   specials,
   values,
-  keys
+  keys,
 } from './JS/modules/specialKeys.js';
 import {
   compare,
   getIndex,
   checkSymbols,
-  substitution
+  substitution,
 } from './JS/modules/clearSpecials.js';
 import {
   backspaceDeletion,
-  deleteDeletion
+  deleteDeletion,
 } from './JS/modules/deletion.js';
 
 import {
@@ -26,22 +24,19 @@ import {
   arrowR,
   arrowU,
   arrowD,
-  enterKey
+  enterKey,
 }
-from './JS/modules/linesNav.js';
+  from './JS/modules/linesNav.js';
 
-let lang = [en, ru];
+const lang = [en, ru];
 
 let ch = localStorage.getItem('ch') || 0;
 
-
-/* localStorage.setItem('ch', '0'); */
-/* localStorage.getItem('lang'); */
 createBlock(lang[ch]);
 
 const body = document.querySelector('body');
 let posCaret = 0;
-let stack = [];
+const stack = [];
 
 export function getFocus() {
   textarea.focus();
@@ -49,18 +44,12 @@ export function getFocus() {
 
 export function getCaretPos() {
   posCaret = document.querySelector('.textarea').selectionStart;
-  console.log(posCaret);
   return posCaret;
 }
 /* ---------------------------change language--------- */
-const changeKeys = ['shift', 'alt'];
-
-
-
-function changeLang(){
-  console.log(stack);
-  if (stack[0] === 'shift' && stack[1] === 'alt'){
-    if(ch === 1){
+function changeLang() {
+  if (stack[0] === 'shift' && stack[1] === 'alt') {
+    if (ch === 1) {
       ch = 0;
     } else {
       ch = 1;
@@ -68,74 +57,64 @@ function changeLang(){
     localStorage.setItem('lang', `${lang[ch]}`);
     localStorage.setItem('ch', `${ch}`);
   }
-  if(stack.length > 2){
+  if (stack.length > 2) {
     stack.shift();
-    console.log(stack);
   }
-  console.log(stack);
   return ch;
 }
 
 /* ---------------------- end of lang changing----------------------------------- */
 
-body.addEventListener('keydown', function (event) {
-  console.log(event.code);
+body.addEventListener('keydown', (event) => {
   getFocus();
   posCaret = textarea.selectionStart;
-  let idElem = document.querySelector(`#${event.code}`);
-  if (event.code === 'AltLeft' || event.code === 'AltRight'){
+  const idElem = document.querySelector(`#${event.code}`);
+  if (event.code === 'AltLeft' || event.code === 'AltRight') {
     event.preventDefault();
-    console.log('alt');
     stack.push('alt');
-    if(stack.length > 2){
+    if (stack.length > 2) {
       stack.shift();
-      console.log(stack);
     }
   }
-  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight'){
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     event.preventDefault();
-    console.log('shift');
     stack.push('shift');
-    if(stack.length > 2){
+    if (stack.length > 2) {
       stack.shift();
-      console.log(stack);
     }
   }
-  let newCh = ch;
-    ch = changeLang();
-    if (newCh !== ch) {
-    let text = document.querySelector('.textarea').value;
+  const newCh = ch;
+  ch = changeLang();
+  if (newCh !== ch) {
+    const text = document.querySelector('.textarea').value;
     body.innerHTML = '';
     createBlock(lang[ch]);
     document.querySelector('.textarea').value = text;
-    }
-  
+  }
+
   idElem.classList.add('active');
-  posCaret = input.selectionStart;
-  console.log(posCaret);
+  posCaret = document.querySelector('textarea').selectionStart;
 });
 
-body.addEventListener('keyup', function () {
+body.addEventListener('keyup', () => {
   getFocus();
-  let active = document.querySelector('.active');
+  const active = document.querySelector('.active');
   if (active) {
     active.classList.remove('active');
   }
 });
-
 
 const keysBlock = document.querySelector('.col');
 const textarea = document.querySelector('.textarea');
 
 textarea.addEventListener('click', getCaretPos);
 
-keysBlock.addEventListener('mousedown', function (event) {
+keysBlock.addEventListener('mousedown', (event) => {
   getFocus();
   posCaret = textarea.selectionStart;
-  let ident = String(event.target.dataset.mouseId);
-  /*   console.log(ident); */
+  const ident = String(event.target.dataset.mouseId);
   if (event.target.dataset.mouseId) {
-    let active = document.querySelector('.active');
+    const active = document.querySelector('.active');
     if (active) {
       active.classList.remove('active');
     }
@@ -143,37 +122,30 @@ keysBlock.addEventListener('mousedown', function (event) {
     if (!compare(ident, specials)) {
       if (checkSymbols(getIndex(ident, keys))) {
         event.preventDefault();
-        let index = getIndex(ident, keys);
-        let text = substitution(index, values);
+        const index = getIndex(ident, keys);
+        const text = substitution(index, values);
         textarea.value += text;
-        posCaret = input.selectionStart;
-        console.log(posCaret);
+        posCaret = document.querySelector('textarea').selectionStart;
       } else {
         event.preventDefault();
         textarea.value += event.target.dataset.mouseId;
-        posCaret = input.selectionStart;
-        console.log(posCaret);
-
+        posCaret = document.querySelector('textarea').selectionStart;
       }
-
     }
-
   }
 });
 
-
-keysBlock.addEventListener('mouseup', function (event) {
+keysBlock.addEventListener('mouseup', (event) => {
   event.target.classList.remove('active');
 });
 
 /* ------------------ reset btn --------------------------- */
 const reset = document.querySelector('button');
-reset.addEventListener('click', function () {
+reset.addEventListener('click', () => {
   document.querySelector('.textarea').value = '';
   getFocus();
   posCaret = 0;
 });
-
 
 const backspace = document.querySelector('#Backspace');
 backspace.addEventListener('click', () => backspaceDeletion(posCaret));
@@ -195,12 +167,3 @@ downArrow.addEventListener('click', () => arrowD(posCaret));
 
 const enter = document.querySelector('#Enter');
 enter.addEventListener('click', (event) => enterKey(event));
-
-
-
-
-
-
-
-
-
