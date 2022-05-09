@@ -30,12 +30,14 @@ import {
 }
 from './JS/modules/linesNav.js';
 
-let lang = localStorage.getItem('lang') || en;
-/*   */
+let lang = [en, ru];
+
 let ch = localStorage.getItem('ch') || 0;
-/* localStorage.setItem('lang', 'en'); */
+
+
+/* localStorage.setItem('ch', '0'); */
 /* localStorage.getItem('lang'); */
-createBlock(lang);
+createBlock(lang[ch]);
 
 const body = document.querySelector('body');
 let posCaret = 0;
@@ -52,69 +54,65 @@ export function getCaretPos() {
 }
 /* ---------------------------change language--------- */
 const changeKeys = ['shift', 'alt'];
-const shifts = ['ShiftLeft', 'ShiftRight'];
-const alts = ['AltLeft', 'AltRight'];
-const langs = ['en', 'ru'];
-
-function altsCheking(id, alts){
-  for (let i = 0; i < alts.length; i++){
-    if(id === alts[i]){
-      return 'alt';
-    };
-    return null;
-  }
-}
-
-function shiftsCheking(id, shifts){
-  for (let i = 0; i < shifts.length; i++){
-    if(id === shifts[i]){
-      return 'shift';
-    };
-    return null;
-  }
-}
 
 
 
-function changeLang(lang){
+function changeLang(){
+  console.log(stack);
   if (stack[0] === 'shift' && stack[1] === 'alt'){
-    if(ch = 1){
+    if(ch === 1){
       ch = 0;
     } else {
       ch = 1;
     }
-    localStorage.setItem('lang', `${langs[ch]}`);
+    localStorage.setItem('lang', `${lang[ch]}`);
     localStorage.setItem('ch', `${ch}`);
   }
+  if(stack.length > 2){
+    stack.shift();
+    console.log(stack);
+  }
+  console.log(stack);
+  return ch;
 }
 
 /* ---------------------- end of lang changing----------------------------------- */
 
 body.addEventListener('keydown', function (event) {
+  console.log(event.code);
   getFocus();
   posCaret = textarea.selectionStart;
   let idElem = document.querySelector(`#${event.code}`);
-/*   let active = document.querySelector('.active'); */
-  let altChecked = altsCheking(event.code, alts);
-  if (altChecked){
-    console.log(altChecked);
-    stack.push(altChecked);
+  if (event.code === 'AltLeft' || event.code === 'AltRight'){
+    event.preventDefault();
+    console.log('alt');
+    stack.push('alt');
+    if(stack.length > 2){
+      stack.shift();
+      console.log(stack);
+    }
   }
-  let shiftChecked = shiftsCheking(event.code, shifts);
-  if (shiftChecked){
-    console.log(shiftChecked);
-    stack.push(shiftChecked);
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight'){
+    event.preventDefault();
+    console.log('shift');
+    stack.push('shift');
+    if(stack.length > 2){
+      stack.shift();
+      console.log(stack);
+    }
   }
+  let newCh = ch;
+    ch = changeLang();
+    if (newCh !== ch) {
+    createBlock(lang[ch]);
+    }
   
-/*   if (active) {
-    active.classList.remove('active');
-  } */
   idElem.classList.add('active');
   posCaret = input.selectionStart;
   console.log(posCaret);
 });
 
-body.addEventListener('keyup', function (event) {
+body.addEventListener('keyup', function () {
   getFocus();
   let active = document.querySelector('.active');
   if (active) {
