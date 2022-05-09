@@ -73,10 +73,8 @@ body.addEventListener('keydown', (event) => {
   if (event.code === 'CapsLock'){
     if (capsToggle){
       capsToggle = false;
-      console.log(capsToggle);
     } else {
       capsToggle = true;
-      console.log(capsToggle);
     }
   }
   if (event.code === 'AltLeft' || event.code === 'AltRight') {
@@ -156,10 +154,8 @@ keysBlock.addEventListener('mousedown', (event) => {
   if (event.target.dataset.mouseId === 'capslock'){
     if (capsToggle){
       capsToggle = false;
-      console.log(capsToggle);
     } else {
       capsToggle = true;
-      console.log(capsToggle);
     }
   }
   if (event.target.dataset.mouseId === 'alt') {
