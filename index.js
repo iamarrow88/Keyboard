@@ -14,11 +14,13 @@ import {
   checkSymbols,
   substitution,
 } from './JS/modules/clearSpecials.js';
+// eslint-disable-next-line import/no-cycle
 import {
   backspaceDeletion,
   deleteDeletion,
 } from './JS/modules/deletion.js';
 
+// eslint-disable-next-line import/no-cycle
 import {
   arrowL,
   arrowR,
@@ -146,7 +148,7 @@ keysBlock.addEventListener('mousedown', (event) => {
         } else {
           textarea.value += event.target.dataset.mouseId;
         }
-        
+
         posCaret = document.querySelector('textarea').selectionStart;
       }
     }
