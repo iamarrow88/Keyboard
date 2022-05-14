@@ -1,0 +1,123 @@
+@import url(https://fonts.googleapis.com/css?family=JetBrains+Mono:100,200,300,regular,500,600,700,800,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic);
+body {
+  font-family: 'JetBrains Mono', sans-serif;
+}
+.container {
+  width: 100%;
+  border: 2px solid black;
+}
+
+h1 {
+  font-size: 50px;
+  color: indigo;
+  text-align: center;
+}
+.message {
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 500;
+  color:cornflowerblue;
+  text-align: center;
+  margin-bottom: 40px;
+}
+button {
+  height: 50px;
+  width: 250px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  color: green;
+  font-size: 25px;
+}
+.textarea {
+  height: 250px;
+  width: calc(80vw - 30px);
+  display: block;
+  margin: 0 auto;
+  padding: 15px;
+  margin-bottom: 30px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 30px;
+  letter-spacing: 1.5px;
+  color: rgb(24, 185, 172);
+}
+
+.keyboard__wrapper {
+  height: 500px;
+  width: 80vw;
+  margin: 0 auto;
+  margin-bottom: 60px;
+  padding-top: 20px;
+  border: 3px solid rgb(34, 34, 56);
+}
+.col {
+  max-width: 1324px;
+  margin: 0 auto;
+}
+
+.row {
+  height: 100px;
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+}
+.row__keys {
+  height: 75px;
+  width: 75px;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'JetBrains Mono', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.row__keys:hover{
+  background-color:azure;
+  border: 1px solid rgb(159, 148, 206);
+/*   transition: .2s; */
+  color: rgb(159, 148, 206);
+}
+
+.backspace {
+  width: 191px;
+}
+
+.tab {
+  width: 94px;
+}
+
+.delete {
+  width: 86px;
+}
+
+.capslock {
+  width: 175px;
+}
+
+.enter {
+  width: 175px;
+}
+
+.shiftleft {
+  width: 185px;
+}
+.shiftright {
+  width: 165px;
+}
+
+.controlleft, .controlright {
+  width: 115px;
+}
+
+.space {
+  width: 540px;
+}
+
+.active {
+  background-color: aquamarine;
+}
+.active:hover {
+  background-color: aquamarine;
+}
